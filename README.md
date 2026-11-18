@@ -42,9 +42,9 @@ Outlooks come from approved rules: a rule "drought > 80, 4 months before → sur
 
 Thresholds are editable in `frameworks/alert-triggers.json`. 12-hour cooldown per corridor and trigger; updates only if the value moves >15%.
 
-**5. Automation**
+**5. Automation and missed runs**
 
-Say "automate it": scheduled tasks on your computer run the daily cycle (ingest, score, triggers, alerts), the weekly, monthly, quarterly, 6-month and annual reports, and a quarterly rule re-learning proposal.
+Say "automate it": scheduled tasks on your computer run the daily cycle (ingest, score, triggers, alerts), the weekly, monthly, quarterly, 6-month and annual reports, and a quarterly rule re-learning proposal. If the computer was off, the next run catches up: missed days are scored and checked (alerts marked LATE), missed reports are produced. For no gaps at all, run the schedule in the cloud from a private GitHub data repository.
 
 ## Scoring
 
@@ -64,6 +64,7 @@ Say "automate it": scheduled tasks on your computer run the daily cycle (ingest,
 | `scripts/period_report.py` | Numbers for weekly, monthly, quarterly, 6-month and annual reports, vs previous period and a year ago |
 | `scripts/outlook.py` | 3/6/12-month outlook from approved rules and their lags |
 | `scripts/triggers.py` | Alert triggers: severity, cadence, cooldown, updates; daily social media spike detection |
+| `scripts/catchup.py` | Lists missed daily runs and reports after the computer was off; records completed runs |
 | `scripts/setup.sh` | Copies the workspace template without overwriting |
 
 ## Governance

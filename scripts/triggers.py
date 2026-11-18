@@ -32,6 +32,7 @@ ap.add_argument("--month-report")
 ap.add_argument("--outlook")
 ap.add_argument("--log", default="alerts/trigger-log.csv")
 ap.add_argument("--out")
+ap.add_argument("--late", action="store_true", help="catch-up run: mark alerts LATE with the original detection date")
 a = ap.parse_args()
 
 today = dt.date.fromisoformat(a.date) if a.date else dt.date.today()
@@ -214,6 +215,8 @@ for f_ in fired:
                 status = "UPDATE"
             else:
                 status = "SUPPRESSED"
+    if a.late and status != "SUPPRESSED":
+        status = "LATE"
     f_["status"] = f_.get("status") or status
     final.append(f_)
 
@@ -238,9 +241,11 @@ alerts = []
 for corr, fs in by_corr.items():
     top = min(fs, key=lambda x: order[x["severity"]])
     alerts.append({"corridor": corr, "severity": top["severity"], "cadence": top["cadence"],
-                   "status": "UPDATE" if any(x["status"] == "UPDATE" for x in fs) else "NEW",
-                   "handling": "HOLD for analyst (30-min SLA) before any broadcast" if top["severity"] == "severe"
-                   else "send when every gate passes (auto-send setting applies)",
+                   "status": "LATE" if a.late else ("UPDATE" if any(x["status"] == "UPDATE" for x in fs) else "NEW"),
+                   "detected_for": today.isoformat(),
+                   "handling": ("LATE (caught up after a missed run): " if a.late else "") +
+                   ("HOLD for analyst (30-min SLA) before any broadcast" if top["severity"] == "severe"
+                    else "send when every gate passes (auto-send setting applies)"),
                    "triggers": fs})
 alerts.sort(key=lambda x: order[x["severity"]])
 json.dump({"date": today.isoformat(), "cadence": a.cadence, "alerts": alerts,

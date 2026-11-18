@@ -38,6 +38,10 @@ Follow the template for the kind in `frameworks/report-templates.md`. Save to `r
 - Outlook section: the signal level per corridor and horizon, the rules behind it with their evidence lines, and the coverage note ("rules look at most N months ahead"). "No signal" never means "nothing will happen".
 - Charts: if the user wants a shareable page, publish the report as a Dashboard artifact (trend of S_final, category indices, outcomes vs year ago).
 
+## 2b. Mark it done
+
+After saving, record it so missed reports can be caught up later: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/catchup.py" --type <kind> --mark <label>` (daily runs use `--type daily --mark <date>`).
+
 ## 3. Review and send
 
 Run `alert-review` on the report (Gate 2 grounding and language checks apply to reports too). Reports are informational: when they pass, send them to the report recipients in `CLAUDE.md` through the connected channel, or keep them in `reports/` and say where they are. Log the send in the daily log.

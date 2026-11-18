@@ -30,6 +30,10 @@ Every alert carries a severity and a cadence, set by the trigger that raised it 
 - One alert per corridor + top driver (category) in any 12-hour window.
 - A new alert inside the window is suppressed unless S_final changed by more than 15%; then it goes out as an update in the same thread.
 
+## Late alerts
+
+An alert found during a catch-up run (after the computer was off) is marked LATE with the date it should have gone out. Same severity rules: a severe late alert is still held for the analyst.
+
 ## Delivery
 
 - Webhooks must return 200 OK. If a Critical delivery fails, escalate to the next channel (Slack → email → SMS).

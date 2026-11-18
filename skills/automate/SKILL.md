@@ -18,8 +18,8 @@ The schedule runs as scheduled tasks on the user's computer, in this workspace f
 | Task name | When | Cron (CRON_TZ=<user zone>) | What the run does |
 |---|---|---|---|
 | EW daily run | every day 06:47 | `47 6 * * *` | `ingest` new files in raw/ incl. daily social media analyses (Gate 1); score every corridor (`score-signal`); `alert-triggers --cadence day` (immediate and daily triggers); draft and review the triggered alerts; send Elevated alerts (70–84) that pass every gate if auto-send is on; hold Critical (85+) for the analyst and notify them; refresh the board; write the daily summary |
-| EW weekly report | Monday 07:13 | `13 7 * * 1` | `reports` kind week, then `alert-triggers --cadence week` |
-| EW monthly report | 1st of month 07:23 | `23 7 1 * *` | `reports` kind month + 3-month outlook, then `alert-triggers --cadence month` |
+| EW weekly report | Monday 07:13 | `13 7 * * 1` | catch up missed weeks; `reports` kind week, then `alert-triggers --cadence week`; mark done |
+| EW monthly report | 1st of month 07:23 | `23 7 1 * *` | catch up missed months; `reports` kind month + 3-month outlook, then `alert-triggers --cadence month`; mark done |
 | EW quarterly report | 1 Jan/Apr/Jul/Oct 07:37 | `37 7 1 1,4,7,10 *` | `reports` kind quarter (3-month) + 3- and 6-month outlooks; run `learn-rules` and save the proposal for human approval (never auto-approve) |
 | EW 6-month report | 1 Jan and 1 Jul 07:53 | `53 7 1 1,7 *` | `reports` kind half + 6- and 12-month outlooks |
 | EW annual report | 2 Jan 08:11 | `11 8 2 1 *` | `reports` kind year + 12-month outlook + source and rulebook review |
@@ -30,7 +30,19 @@ Offer the defaults; change times if the user asks. Use their time zone from the 
 
 Write each prompt as a complete instruction, for example for the daily run:
 
-> In the Early-Warning OS workspace at <absolute folder path>: read CLAUDE.md and frameworks/governance.md. Run the daily cycle: (1) ingest every new file in raw/ with the ingest skill, filing only items that pass Gate 1 and quarantining the rest; (2) score every corridor listed in CLAUDE.md for the current period with the score-signal skill; (3) run the alert-triggers skill with cadence day and, for every triggered alert, draft it with alert-draft (severity, cadence, trigger evidence) and review it with alert-review; (4) send moderate alerts that pass every gate through <channel> only if CLAUDE.md says auto-send: on, otherwise leave them in alerts/drafts for approval; (5) hold every severe alert in alerts/held and notify <analyst> through <channel> at once; never broadcast a severe alert without their approval; (6) refresh alerts/board.md; (7) write a five-line daily summary to reports/daily/<date>.md and to the daily log. Ask no questions; record any decision you had to make at the top of the summary.
+> In the Early-Warning OS workspace at <absolute folder path>: read CLAUDE.md and frameworks/governance.md. Run the daily cycle: (0) catch up first: run python3 "${CLAUDE_PLUGIN_ROOT}/scripts/catchup.py" --type daily; for every missed date, score each corridor for that date, append it to alerts/history.csv with that date, and run triggers.py --cadence day --date <missed date> --late, then mark it done with catchup.py --type daily --mark <date> --mode catch-up; (1) ingest every new file in raw/ with the ingest skill, filing only items that pass Gate 1 and quarantining the rest; (2) score every corridor listed in CLAUDE.md for the current period with the score-signal skill; (3) run the alert-triggers skill with cadence day and, for every triggered alert, draft it with alert-draft (severity, cadence, trigger evidence) and review it with alert-review; (4) send moderate alerts that pass every gate through <channel> only if CLAUDE.md says auto-send: on, otherwise leave them in alerts/drafts for approval; (5) hold every severe alert in alerts/held and notify <analyst> through <channel> at once; never broadcast a severe alert without their approval; (6) refresh alerts/board.md; (7) write a five-line daily summary to reports/daily/<date>.md and to the daily log, listing any days caught up and any LATE alerts first; (8) mark the run done: catchup.py --type daily --mark <today>. Ask no questions; record any decision you had to make at the top of the summary.
+
+## Missed runs (computer off, app closed, channel down)
+
+Every scheduled prompt starts with a catch-up step and ends by marking the run done in `alerts/run-log.csv`:
+
+- **Daily run:** `catchup.py --type daily` lists every missed date (up to 62 days back). For each: score the corridors for that date, run `triggers.py --cadence day --date <date> --late`, mark it done. Late alerts say LATE and the date they should have gone out. Severe late alerts still go to the analyst first.
+- **Report runs:** `catchup.py --type week|month|quarter|half|year` lists missed report windows, each with an `--end` date. Produce each missing report with `period_report.py --end <date>` (and its triggers, marked `--late`) before the current one, then mark each label done.
+- Nothing is lost while the computer is off: files stay in `raw/`, and the history is filled in at the next run. What is lost is time: an alert raised late cannot be sent early. For an early-warning system that must not pause, run the schedule in the cloud (see below).
+
+## Cloud option
+
+Scheduled tasks that need this folder only run while the computer and the desktop app are on. To run with the computer off, keep the workspace in a private GitHub repository and create the tasks as cloud tasks (no `requires_local_device`): each run clones the repository, does the cycle, commits and pushes the results, and sends alerts through connected channels (Slack, email). The user creates the empty repository; then attach it, push the workspace, and create the tasks without the local-device flag.
 
 ## Rules that never change in automated runs
 
