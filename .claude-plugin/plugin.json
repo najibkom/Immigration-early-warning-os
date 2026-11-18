@@ -1,6 +1,6 @@
 {
   "name": "early-warning-os",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Project OS for the AI Migration & Population Early-Warning Intelligence Pipeline. Project OS (projects, raw inbox, daily logs, brief, shutdown), Intelligence Brain (corridors, sources, taxonomy, playbooks, historical base) and Alert Engine (six-category scoring with a learned rulebook, alerts, three quality gates with human-in-the-loop, board, feedback). Learns early-warning rules from past documents and migration figures; weekly, monthly, quarterly, 6-month and annual reports with 3/6/12-month outlooks; alerts triggered by condition with severity (severe/moderate) and cadence (immediate/day/week/month), incl. same-day social media spikes; fully schedulable. Run the setup skill in an empty folder to begin.",
   "author": {
     "name": "Early-Warning OS"

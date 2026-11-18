@@ -20,6 +20,7 @@ multiplier C -> S_final (max 100) -> tier -> 2.5-sigma anomaly check.
 import argparse, csv, datetime, json, math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ewlib import CATEGORIES, canon, read_csv, fnum, load_weights
+from periods import shift
 
 VECTOR_THRESHOLD = 70
 BONUS_CAP = 20
@@ -56,7 +57,6 @@ def apply_rules(rulebook, corridor, period, order, rows):
         return fired, missing, 0.0
     with open(rulebook) as f:
         book = json.load(f)
-    t = order.index(period)
     for rule in book.get("rules", []):
         if rule.get("status") != "approved":
             continue
@@ -66,12 +66,13 @@ def apply_rules(rulebook, corridor, period, order, rows):
         ok, why = True, []
         for c in rule["conditions"]:
             cat, thr, lag = canon(c["category"]), float(c["threshold"]), int(c.get("lag", 0))
-            if t - lag < 0 or rows[order[t - lag]].get(cat) is None:
+            src = shift(period, -lag)
+            if src not in rows or rows[src].get(cat) is None:
                 ok = None
-                missing.append(f"{rule['id']}: no {cat} value {lag} periods before {period}")
+                missing.append(f"{rule['id']}: no {cat} value for {src} ({lag} periods before {period})")
                 break
-            v = rows[order[t - lag]][cat]
-            why.append(f"{cat}={v:g} in {order[t - lag]} (>{thr:g})")
+            v = rows[src][cat]
+            why.append(f"{cat}={v:g} in {src} (>{thr:g})")
             if not v > thr:
                 ok = False
         if ok:

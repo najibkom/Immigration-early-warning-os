@@ -21,6 +21,7 @@ import argparse, json, os, sys, datetime
 from collections import defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ewlib import CATEGORIES, LABELS, read_csv, fnum, pearson, spearman, quantile, load_weights
+from periods import shift
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--features", default="wiki/intel/features.csv")
@@ -52,7 +53,10 @@ if not a.metric and len(metrics) > 1:
     sys.exit(f"several outcome metrics found {sorted(m for m in metrics if m)}: pick one with --metric")
 
 def series(corr):
-    periods = sorted(set(feat[corr]) | set(outc[corr]))
+    seen = sorted(set(feat[corr]) | set(outc[corr]))
+    periods = [seen[0]]
+    while periods[-1] < seen[-1] and len(periods) < 5000:   # fill calendar gaps so lags are calendar lags
+        periods.append(shift(periods[-1], 1))
     return periods, [feat[corr].get(p, {}) for p in periods], [outc[corr].get(p) for p in periods]
 
 def pairs(X, Y, cat, lag, idx):
