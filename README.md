@@ -9,6 +9,21 @@ A project operating system for the **AI Migration & Population Early-Warning Int
 | Alert Engine | `score-signal`, `alert-triggers`, `alert-draft`, `alert-review`, `alerts-board`, `feedback` | Campaign Engine |
 | Reporting & automation | `reports`, `automate` | Reporting agent |
 
+## Install
+
+**Claude desktop app:** open the `early-warning-os.plugin` file from the chat and press install. The `.plugin` file is a zip archive: do not open it in a text editor.
+
+**Claude Code (terminal or the VS Code extension):** in a Claude Code session, run
+
+```
+/plugin marketplace add najibkom/early-warning-os
+/plugin install early-warning-os@early-warning-os
+```
+
+On Claude Code 2.1.275 or later this works in one step: `/plugin install early-warning-os --marketplace najibkom/early-warning-os`. The repository is private, so your git must be signed in to GitHub with access to it.
+
+**To read or edit the files in VS Code:** clone this repository (`git clone https://github.com/najibkom/early-warning-os`) and open the folder, or rename the `.plugin` file to `.zip` and extract it.
+
 ## How it works
 
 **1. Learn (once, then every quarter)**
