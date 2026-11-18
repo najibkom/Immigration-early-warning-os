@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "early-warning-os",
+  "description": "Early-Warning OS for the AI Migration & Population Early-Warning Intelligence Pipeline.",
+  "owner": { "name": "najibkom" },
+  "plugins": [
+    {
+      "name": "early-warning-os",
+      "description": "Project OS, Intelligence Brain and Alert Engine for migration early warning: learned rules, multi-horizon reports and outlooks, severity-based alerts, automation.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
