@@ -1,0 +1,2 @@
+source_id,name,vector,type,url,method,language,refresh,credibility,status,false_positives,notes
+SRC-001,EXAMPLE Official gazette (replace),policy,government,https://example.org,scrape-pdf,fr,daily,0.9,ACTIVE,0,Example row: replace with real sources
