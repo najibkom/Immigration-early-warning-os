@@ -1,12 +1,13 @@
 # Early-Warning OS
 
-A project operating system for the **AI Migration & Population Early-Warning Intelligence Pipeline**, built on the same three-module pattern as a personal OS + marketing brain + campaign engine. Version 0.2 learns its early-warning rules from your own history.
+A project operating system for the **AI Migration & Population Early-Warning Intelligence Pipeline**, built on the same three-module pattern as a personal OS + marketing brain + campaign engine. Version 0.3 learns its early-warning rules from your own history, reports on five time scales with 3/6/12-month outlooks, raises alerts by severity and urgency (including same-day social media spikes), and runs on a schedule.
 
 | Module | Skills | Marketing analogy |
 |---|---|---|
 | Project OS | `setup`, `ingest`, `brief`, `shutdown` | Personal OS |
 | Intelligence Brain | `intel-brain` (auto), `corridor-profile`, `source-registry`, `history-load`, `learn-rules` | Marketing Brain |
-| Alert Engine | `score-signal`, `alert-draft`, `alert-review`, `alerts-board`, `feedback` | Campaign Engine |
+| Alert Engine | `score-signal`, `alert-triggers`, `alert-draft`, `alert-review`, `alerts-board`, `feedback` | Campaign Engine |
+| Reporting & automation | `reports`, `automate` | Reporting agent |
 
 ## How it works
 
@@ -18,6 +19,32 @@ A project operating system for the **AI Migration & Population Early-Warning Int
 
 **2. Run (every day or week)**
 `ingest` new information (Gate 1) → `score-signal` (weights + approved rules that look back over past periods) → `alert-draft` → `alert-review` (Gate 2, human hold at 85+) → send → `feedback` (Gate 3) → `alerts-board`, weekly digest.
+
+**3. Report (automatic)**
+
+| Report | Looks back over | Looks ahead |
+|---|---|---|
+| Daily summary | yesterday | — |
+| Weekly | last week vs the week before | — |
+| Monthly | last month vs previous and a year ago | 3 months |
+| Quarterly (3-month) | last quarter vs previous and a year ago | 3 and 6 months |
+| 6-month | last half-year | 6 and 12 months |
+| Annual | last year | 12 months |
+
+Outlooks come from approved rules: a rule "drought > 80, 4 months before → surge" that is met today predicts a surge in 4 months.
+
+**4. Alerts by condition, severity and urgency**
+
+| Severity | Examples | Cadence | Handling |
+|---|---|---|---|
+| Severe | Sudden big social media spike (≥3σ and +100% in a day), critical score ≥85, high-confidence surge expected | Immediate (same day) or monthly for outlooks | Held for the analyst, 30-min SLA |
+| Moderate | Social media rising 2+ days, score 70–84, +15 in a day, sustained weekly trend, category jump, medium outlook, migration +30% vs a year ago | Daily, weekly or monthly | Sent when every gate passes (auto-send) |
+
+Thresholds are editable in `frameworks/alert-triggers.json`. 12-hour cooldown per corridor and trigger; updates only if the value moves >15%.
+
+**5. Automation**
+
+Say "automate it": scheduled tasks on your computer run the daily cycle (ingest, score, triggers, alerts), the weekly, monthly, quarterly, 6-month and annual reports, and a quarterly rule re-learning proposal.
 
 ## Scoring
 
@@ -34,6 +61,9 @@ A project operating system for the **AI Migration & Population Early-Warning Int
 | `scripts/learn.py` | Lagged correlations, rule candidates (single and paired), train/test check, proposed weights → `.md` + `.json` report |
 | `scripts/score.py` | Scores a corridor-period with weights + rulebook, corroboration, tiers, anomaly; `--record` adds the period to history |
 | `scripts/recalibrate.py` | `--lower <category>` after a false positive, or `--from <report.json>` to apply approved learned weights |
+| `scripts/period_report.py` | Numbers for weekly, monthly, quarterly, 6-month and annual reports, vs previous period and a year ago |
+| `scripts/outlook.py` | 3/6/12-month outlook from approved rules and their lags |
+| `scripts/triggers.py` | Alert triggers: severity, cadence, cooldown, updates; daily social media spike detection |
 | `scripts/setup.sh` | Copies the workspace template without overwriting |
 
 ## Governance

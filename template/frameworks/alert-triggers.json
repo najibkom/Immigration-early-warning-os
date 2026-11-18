@@ -1,0 +1,29 @@
+{
+  "_about": "Alert trigger conditions. Each trigger has a severity (severe | moderate) and a cadence (immediate | day | week | month). Edit thresholds here; scripts/triggers.py evaluates them. Severe alerts are always held for the analyst before external broadcast; moderate alerts are sent when they pass every gate (and auto-send is on).",
+  "cooldown_hours": 12,
+  "update_if_change_pct": 15,
+  "triggers": [
+    {"id": "MEDIA-SPIKE-SEVERE", "name": "Sudden big social media trend", "check": "media_spike", "severity": "severe", "cadence": "immediate",
+     "params": {"z_min": 3.0, "pct_min": 100, "baseline_days": 30}},
+    {"id": "MEDIA-SPIKE-MODERATE", "name": "Social media trend rising for 2+ days", "check": "media_rising", "severity": "moderate", "cadence": "day",
+     "params": {"z_min": 2.0, "pct_min": 50, "days": 2, "baseline_days": 30}},
+    {"id": "MEDIA-SUSTAINED", "name": "Social media trend sustained over the week", "check": "media_sustained", "severity": "moderate", "cadence": "week",
+     "params": {"pct_min": 30, "window_days": 7, "baseline_days": 28}},
+    {"id": "SCORE-CRITICAL", "name": "Risk score critical", "check": "score_at_least", "severity": "severe", "cadence": "immediate",
+     "params": {"min": 85}},
+    {"id": "SCORE-ELEVATED", "name": "Risk score elevated", "check": "score_between", "severity": "moderate", "cadence": "day",
+     "params": {"min": 70, "max": 84.99}},
+    {"id": "SCORE-JUMP", "name": "Risk score jumped in one day", "check": "score_jump", "severity": "moderate", "cadence": "day",
+     "params": {"points": 15, "severe_if_reaches": 85}},
+    {"id": "WEEK-HIGH", "name": "High risk all week", "check": "week_mean", "severity": "moderate", "cadence": "week",
+     "params": {"min": 70, "severe_min": 85, "critical_days": 3}},
+    {"id": "WEEK-CATEGORY-JUMP", "name": "A category jumped this week", "check": "category_jump", "severity": "moderate", "cadence": "week",
+     "params": {"points": 25}},
+    {"id": "OUTLOOK-HIGH", "name": "High-confidence surge expected", "check": "outlook", "severity": "severe", "cadence": "month",
+     "params": {"horizon": "3m", "levels": ["high"], "escalate_to_day_if_within_periods": 1}},
+    {"id": "OUTLOOK-MEDIUM", "name": "Medium-confidence surge expected", "check": "outlook", "severity": "moderate", "cadence": "month",
+     "params": {"horizon": "3m", "levels": ["medium"]}},
+    {"id": "OUTCOME-RISE", "name": "Migration figures up vs a year ago", "check": "outcome_yoy", "severity": "moderate", "cadence": "month",
+     "params": {"pct_min": 30, "severe_pct": 60}}
+  ]
+}

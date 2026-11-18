@@ -5,7 +5,8 @@ Plain, neutral, cited. Every factual line ends with its Source IDs in brackets, 
 ## Priority alert (70–84) and Critical alert (85–100)
 
 ```
-[TIER] — <Corridor name> — S_final <score> (<+/- change> vs 30-day mean)
+[SEVERE | MODERATE] [IMMEDIATE | DAILY | WEEKLY | MONTHLY] — <Corridor name> — S_final <score> (<+/- change> vs 30-day mean)
+Triggered by: <trigger IDs and their evidence, e.g. MEDIA-SPIKE-SEVERE: route searches +154% today, z 14.3 [SRC-010]>
 Correlation ID: <uuid>    Generated: <date time UTC>    Status: DRAFT | HELD | APPROVED
 
 WHAT CHANGED (2–3 lines)

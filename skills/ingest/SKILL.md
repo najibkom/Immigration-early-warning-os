@@ -43,6 +43,7 @@ On confirmation:
 - Write the record as JSON to `wiki/intel/signals/<YYYY-MM>/<correlation_id>.json` (create folders as needed), matching the schema.
 - Add a dated line under the corridor dossier's "History" or "Open questions" when the signal changes the picture.
 - Append the indicator rows to `wiki/intel/indicators.csv`.
+- Daily social media analyses (exports, monitoring reports): also append one aggregate row per corridor, day and indicator to `wiki/intel/media-daily.csv` (`date,corridor,indicator,value,source_id,notes`) so spikes are caught the same day.
 - Migration figures (arrivals, crossings, asylum applications) go to `wiki/intel/outcomes.csv`, not to signals: they are what the system learns to anticipate.
 - Leave originals in `raw/` untouched: they are the archive.
 

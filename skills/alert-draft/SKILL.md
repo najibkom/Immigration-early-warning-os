@@ -9,7 +9,7 @@ Read the `intel-brain` skill, `frameworks/alert-templates.md` and `frameworks/go
 
 ## Modes
 
-- **Alert** (default, from a `*-score.json`): priority (70–84) or critical (85–100).
+- **Alert** (default): from a `*-score.json` or an `alerts/triggers/<date>-<cadence>.json` entry. Put **severity** (SEVERE / MODERATE), **cadence** (IMMEDIATE / DAILY / WEEKLY / MONTHLY) and every trigger with its evidence at the top. Severe → status HELD.
 - **Digest**: the weekly executive intelligence digest from `alerts/history.csv`, the board's watchlist queue, `alerts/sent/` and `alerts/feedback.csv` for the last 7 days.
 - **Daily**: the five-line daily summary.
 - **Analyst note**: for an anomaly flag below 70; same template, titled "ANALYST NOTE — anomaly", not for broadcast.

@@ -14,11 +14,11 @@ Needs `wiki/intel/features.csv` and `wiki/intel/outcomes.csv` (built by `history
 ```bash
 python3 "${CLAUDE_PLUGIN_ROOT}/scripts/learn.py" --metric <metric> \
   --features wiki/intel/features.csv --outcomes wiki/intel/outcomes.csv \
-  --weights frameworks/weights.json --max-lag 6 \
+  --weights frameworks/weights.json --max-lag 12 \
   --out drafts/rule-candidates-<YYYY-MM-DD>
 ```
 
-Defaults: lags 0–6 periods, oldest 70% of periods to learn, newest 30% to test, "surge" = outcome above its 75th percentile, thresholds 60/70/80. Change them only if the user asks (e.g. `--max-lag 12` for slow climate effects).
+Defaults: lags 0–12 periods (needed for the 12-month outlook), oldest 70% of periods to learn, newest 30% to test, "surge" = outcome above its 75th percentile, thresholds 60/70/80. Change them only if the user asks; with weekly periods use `--max-lag 52`.
 
 What it computes, per corridor:
 - **Lead indicators**: correlation between each category index and the outcome, at each lag, on learn and test periods.

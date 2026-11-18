@@ -9,6 +9,22 @@
 
 An anomaly flag (more than 2.5σ from the 30-day baseline) sends the item to an analyst whatever its tier.
 
+## Severity and cadence (alert triggers)
+
+Every alert carries a severity and a cadence, set by the trigger that raised it (`frameworks/alert-triggers.json`, checked by `scripts/triggers.py`).
+
+| Severity | Handling | Channels |
+|---|---|---|
+| Severe | Held for the analyst on duty, 30-minute SLA, then broadcast | SMS + priority channel + executive briefing |
+| Moderate | Sent when every gate passes (if auto-send is on), else waits for approval | Team channel / email |
+
+| Cadence | Checked | Typical triggers |
+|---|---|---|
+| Immediate | Every daily run, as soon as detected | Sudden big social media spike, critical score |
+| Daily | Every daily run | Social media rising 2+ days, elevated score, one-day score jump, surge expected next period |
+| Weekly | After the weekly report | Sustained social media trend, high weekly risk, category jump |
+| Monthly | After the monthly report and outlook | Surge expected in the next 3 months, migration figures up vs a year ago |
+
 ## Cooldown and deduplication
 
 - One alert per corridor + top driver (category) in any 12-hour window.
