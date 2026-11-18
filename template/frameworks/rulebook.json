@@ -1,0 +1,20 @@
+{
+  "_about": "Approved early-warning rules. Only rules with status 'approved' change scores. Added by the learn-rules skill after a human approves; never edited by scoring.",
+  "rules": [
+    {
+      "id": "R-EXAMPLE-01",
+      "name": "EXAMPLE: drought then social-media surge",
+      "status": "draft",
+      "corridors": ["*"],
+      "conditions": [
+        {"category": "env", "op": ">", "threshold": 70, "lag": 4},
+        {"category": "media", "op": ">", "threshold": 70, "lag": 1}
+      ],
+      "points": 6,
+      "confidence": "example",
+      "evidence": "Illustration only. Replace with rules learned from your own history.",
+      "approved_by": "",
+      "approved_on": ""
+    }
+  ]
+}

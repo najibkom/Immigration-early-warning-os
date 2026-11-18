@@ -1,42 +1,45 @@
-# Scoring model (Layer 3)
+# Scoring model (Layer 3), v0.2
 
 The engine is `scripts/score.py` in the plugin. Never compute a score by hand in prose: run the script.
 
-## Sub-indices (0–100 each)
+## Six categories (each indexed 0–100)
 
-| Vector | Key | Default weight | What feeds it |
+| Category | Key | Default weight | What feeds it |
 |---|---|---|---|
-| Social signal | `social` | 0.25 (w1) | Aggregate volume velocity, sentiment shift, search frequency on transit/displacement topics. Aggregate only, never individual posts |
-| Economic stress | `econ` | 0.30 (w2) | Food prices, currency moves, unemployment, remittance flows |
-| Environmental impact | `weather` | 0.25 (w3) | Drought indices, rainfall anomaly, floods, crop failure |
-| Policy shift | `policy` | 0.20 (w4) | Official gazettes, decrees, visa or border rule changes |
+| Economy, incl. employment and SMEs | `econ` | 0.25 | Youth unemployment, SME closures, food prices, currency, remittances |
+| Weather and environment | `env` | 0.20 | Drought index, rainfall anomaly, floods, harvest loss |
+| Politics and security, incl. protests and conflict | `politics` | 0.20 | Decrees, visa/border changes, protest events, conflict events |
+| Social and health, incl. disease | `social` | 0.15 | Disease outbreaks, service disruption, school closures |
+| Social media trends (aggregate only) | `media` | 0.15 | Search volume on routes/visas/jobs abroad, topic mentions, sentiment shares |
+| Other | `other` | 0.05 | Anything relevant outside the five; not counted for corroboration |
 
-Live weights are in `frameworks/weights.json`. The feedback skill changes them; nothing else does.
+An index is the percentile of the period's indicators within their own history (`scripts/to_index.py`): 0 = calmest period seen, 100 = most extreme. Live weights are in `frameworks/weights.json`; `learn-rules` (with approval) and `feedback` change them.
 
 ## Formula
 
-S_total = w1·I_social + w2·I_econ + w3·I_weather + w4·I_policy
+1. Base score = Σ weight × index over the six categories.
+2. Rule bonus = sum of points of every **approved** rule in `frameworks/rulebook.json` whose conditions are met (conditions can look back several periods in `wiki/intel/features.csv`). Capped at 20.
+3. S_total = min(100, base + bonus).
+4. Corroboration multiplier C, counting categories above 70 (excluding "other"): 0 → 1.00 · 1 → 0.85 · 2 → 1.15 · 3+ → 1.30.
+5. S_final = min(100, S_total × C).
 
-(Assumption: the source spec's Layer 3 section on S_total was not in the excerpt provided; a weighted sum of the four sub-indices is used. Change it here and in `score.py` if the full spec differs.)
+(Assumption: the original spec's S_total section was not in the excerpt provided; this weighted sum + rulebook is used. Change it here and in `score.py` if the full spec differs.)
 
-## Cross-vector corroboration multiplier C
+## Learning loop
 
-A vector "triggers" when its index is above 70.
-
-| Vectors above 70 | C | Meaning |
-|---|---|---|
-| 0 | 1.00 | Neutral |
-| 1 | 0.85 | Damping: single-vector signals are not trusted alone |
-| 2 | 1.15 | Amplification |
-| 3 or more | 1.30 | High confidence |
-
-S_final = min(100, S_total · C)
+`history-load` builds `indicators.csv` → `features.csv` and `outcomes.csv`. `learn-rules` runs `scripts/learn.py`: lagged correlations and rule candidates, learned on the oldest 70% of periods and tested on the newest 30%. A human approves rules and weights. Re-run quarterly.
 
 ## Anomaly detection
 
-For each corridor the script reads `alerts/history.csv` and computes the 30-day and 90-day rolling means of S_final. If today's score is more than 2.5 standard deviations from the 30-day mean (needs at least 7 points), the signal is flagged and goes to an analyst even when the score is below 70.
+30-day and 90-day rolling means of S_final per corridor from `alerts/history.csv`. More than 2.5σ from the 30-day mean (at least 7 points) → analyst review, even below 70.
 
 ## Hard rules
 
-- Every score lists the Source IDs it rests on. No Source IDs, no score.
-- Contradictory official texts (for example two decrees on the same border) force a human hold, whatever the score.
+- Every score lists the Source IDs it rests on. No Source IDs, no published score.
+- Contradictory official texts force a human hold, whatever the score.
+- Only approved rules count. Draft and retired rules are ignored.
+
+## Change log
+
+| Date | What changed | Evidence | Approved by |
+|---|---|---|---|

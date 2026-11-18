@@ -1,6 +1,8 @@
 {
-  "social": 0.25,
-  "econ": 0.30,
-  "weather": 0.25,
-  "policy": 0.20
+  "econ": 0.25,
+  "env": 0.20,
+  "politics": 0.20,
+  "social": 0.15,
+  "media": 0.15,
+  "other": 0.05
 }

@@ -2,22 +2,96 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Early-Warning signal record",
   "type": "object",
-  "required": ["correlation_id", "captured_at", "source_id", "content_sha256", "corridor", "vector", "summary", "language"],
+  "required": [
+    "correlation_id",
+    "captured_at",
+    "source_id",
+    "content_sha256",
+    "corridor",
+    "category",
+    "summary",
+    "language",
+    "period"
+  ],
   "properties": {
-    "correlation_id": { "type": "string", "description": "UUIDv4, propagates through every layer" },
-    "captured_at": { "type": "string", "format": "date-time" },
-    "source_id": { "type": "string", "description": "ID from wiki/intel/sources.csv, e.g. SRC-014" },
-    "source_url": { "type": "string" },
-    "archive_path": { "type": "string", "description": "Path of the original document in raw/" },
-    "content_sha256": { "type": "string" },
-    "corridor": { "type": "string", "description": "Corridor slug from wiki/intel/corridors/" },
-    "geo": { "type": "object", "properties": { "country": {"type": "string"}, "region": {"type": "string"} } },
-    "vector": { "enum": ["social", "econ", "weather", "policy"] },
-    "taxonomy": { "type": "array", "items": { "type": "string" }, "description": "Codes from wiki/intel/taxonomy.md" },
-    "metric": { "type": "object", "description": "Aggregate measurement, e.g. {name, value, unit, baseline}" },
-    "summary": { "type": "string", "description": "One or two neutral sentences, no PII" },
-    "language": { "type": "string" },
-    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
-    "pii_scrubbed": { "type": "boolean", "const": true }
+    "correlation_id": {
+      "type": "string",
+      "description": "UUIDv4, propagates through every layer"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_id": {
+      "type": "string",
+      "description": "ID from wiki/intel/sources.csv, e.g. SRC-014"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "archive_path": {
+      "type": "string",
+      "description": "Path of the original document in raw/"
+    },
+    "content_sha256": {
+      "type": "string"
+    },
+    "corridor": {
+      "type": "string",
+      "description": "Corridor slug from wiki/intel/corridors/"
+    },
+    "geo": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        }
+      }
+    },
+    "taxonomy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Codes from wiki/intel/taxonomy.md"
+    },
+    "metric": {
+      "type": "object",
+      "description": "Aggregate measurement, e.g. {name, value, unit, baseline}"
+    },
+    "summary": {
+      "type": "string",
+      "description": "One or two neutral sentences, no PII"
+    },
+    "language": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "pii_scrubbed": {
+      "type": "boolean",
+      "const": true
+    },
+    "period": {
+      "type": "string",
+      "description": "2024-03 (monthly) or 2024-W11 (weekly)"
+    },
+    "category": {
+      "enum": [
+        "econ",
+        "env",
+        "politics",
+        "social",
+        "media",
+        "other"
+      ],
+      "description": "Scoring category"
+    }
   }
 }

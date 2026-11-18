@@ -11,7 +11,7 @@ An anomaly flag (more than 2.5σ from the 30-day baseline) sends the item to an 
 
 ## Cooldown and deduplication
 
-- One alert per corridor + top driver in any 12-hour window.
+- One alert per corridor + top driver (category) in any 12-hour window.
 - A new alert inside the window is suppressed unless S_final changed by more than 15%; then it goes out as an update in the same thread.
 
 ## Delivery

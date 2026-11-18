@@ -1,8 +1,21 @@
 {
   "name": "early-warning-os",
-  "version": "0.1.0",
-  "description": "Project OS for the AI Migration & Population Early-Warning Intelligence Pipeline. Three modules in one: a Project OS (projects, raw inbox, daily logs, brief, shutdown), an Intelligence Brain (corridor profiles, source registry, taxonomy, playbooks) and an Alert Engine (scoring, alert drafting, three quality gates with human-in-the-loop, alerts board, feedback recalibration). Run the setup skill in an empty folder to begin.",
-  "author": { "name": "Early-Warning OS" },
+  "version": "0.2.0",
+  "description": "Project OS for the AI Migration & Population Early-Warning Intelligence Pipeline. Project OS (projects, raw inbox, daily logs, brief, shutdown), Intelligence Brain (corridors, sources, taxonomy, playbooks, historical base) and Alert Engine (six-category scoring with a learned rulebook, alerts, three quality gates with human-in-the-loop, board, feedback). v0.2 learns early-warning rules from past documents and migration figures. Run the setup skill in an empty folder to begin.",
+  "author": {
+    "name": "Early-Warning OS"
+  },
   "license": "Proprietary",
-  "keywords": ["early-warning", "migration", "displacement", "risk-scoring", "alerts", "quality-gate", "project-os"]
+  "keywords": [
+    "early-warning",
+    "migration",
+    "displacement",
+    "risk-scoring",
+    "alerts",
+    "quality-gate",
+    "project-os",
+    "correlation",
+    "lead-indicators",
+    "rule-learning"
+  ]
 }

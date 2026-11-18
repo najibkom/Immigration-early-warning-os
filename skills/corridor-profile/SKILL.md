@@ -1,6 +1,6 @@
 ---
 name: corridor-profile
-description: Builds or updates a corridor dossier in the Intelligence Brain — geography, population context, drivers by vector, baselines, thresholds, known noise, matching playbooks and history — from the user's sources, ingested signals and cited web research. Use when the user says "profile a corridor", "add the Sahel to Morocco corridor", "update the corridor dossier", or names a new route to monitor.
+description: Builds or updates a corridor dossier in the Intelligence Brain — geography, population context, drivers by category, learned lead indicators, baselines, thresholds, known noise, matching playbooks and history — from the user's sources, ingested signals and cited web research. Use when the user says "profile a corridor", "add the Sahel to Morocco corridor", "update the corridor dossier", or names a new route to monitor.
 ---
 
 # Corridor profile

@@ -16,20 +16,25 @@ analyst: ""
 ## Population and context
 Two to four lines: who moves on this corridor and why, in aggregate terms. Cite sources.
 
-## Drivers by vector
-| Vector | Main drivers here | Indicators used | Sources |
+## Drivers by category
+| Category | Main drivers here | Indicators used | Sources |
 |---|---|---|---|
-| social | | | |
-| econ | | | |
-| weather | | | |
-| policy | | | |
+| econ (jobs, SMEs, prices) | | | |
+| env (drought, floods, harvest) | | | |
+| politics (decrees, protests, conflict) | | | |
+| social (disease, services) | | | |
+| media (search, mentions) | | | |
+| other | | | |
+
+## Learned lead indicators and rules
+From the latest `learn-rules` report: category, lag, strength, approved rule IDs.
 
 ## Baselines
 | Indicator | Normal range | Season pattern | Source |
 |---|---|---|---|
 
 ## Corridor-specific thresholds
-Default vector threshold is 70. Note any reason to read this corridor differently (seasonality, chronic stress).
+Default category threshold is 70. Note any reason to read this corridor differently (seasonality, chronic stress).
 
 ## Known noise
 Events that produce false spikes here (festivals, football, harvest migration, hashtag reuse).

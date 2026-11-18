@@ -18,8 +18,8 @@ Read the `intel-brain` skill, `frameworks/alert-templates.md` and `frameworks/go
 
 1. Load the score JSON and the input JSON. Load the records behind each Source ID.
 2. **Cooldown check** (G3.1): look in `alerts/sent/` for an alert on the same corridor + top driver in the last 12 hours. If there is one and S_final changed by 15% or less, stop and say it is suppressed. If more than 15%, draft it as an UPDATE that names the earlier correlation ID.
-3. **Playbook match**: from `wiki/intel/playbooks/`, pick the playbook whose scenario matches the vectors above 70 and the corridor, and whose minimum tier is met. Quote its actions verbatim. Only `approved` playbooks count as recommendations; a `draft` match is shown as "Proposed playbook (not yet approved)". No match: write "No matching playbook. Gap logged." and add a task to `projects/pipeline-build.md`. Never invent operational actions.
-4. Fill the template. Drivers table straight from the score JSON. "What changed" uses only facts in the cited records. "Confidence and limits" is never empty.
+3. **Playbook match**: from `wiki/intel/playbooks/`, pick the playbook whose scenario matches the categories above 70, the rules fired and the corridor, and whose minimum tier is met. Quote its actions verbatim. Only `approved` playbooks count as recommendations; a `draft` match is shown as "Proposed playbook (not yet approved)". No match: write "No matching playbook. Gap logged." and add a task to `projects/pipeline-build.md`. Never invent operational actions.
+4. Fill the template. Drivers table and "Early-warning rules fired" straight from the score JSON, each rule with its evidence line from `frameworks/rulebook.json`. "What changed" uses only facts in the cited records. "Confidence and limits" is never empty.
 5. Status: `HELD` if S_final ≥ 85 or `hitl_required`, otherwise `DRAFT`.
 6. Save to `alerts/drafts/<YYYY-MM-DD>-<corridor>-<tier-short>.md` (or `alerts/held/` for HELD) with frontmatter: `correlation_id, corridor, s_final, tier, status, source_ids, playbook, created_utc`.
 7. Run `alert-review` on it automatically.

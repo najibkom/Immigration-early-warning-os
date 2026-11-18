@@ -12,12 +12,16 @@ WHAT CHANGED (2–3 lines)
 <the conditions that moved, each with a source>
 
 DRIVERS
-| Vector | Index | Weight | Contribution |
+| Category | Index | Weight | Contribution |
 | ... from score.py output ... |
-Corroboration: <n> vectors above 70 → C = <value>
+Corroboration: <n> categories above 70 → C = <value>
+
+EARLY-WARNING RULES FIRED (from the approved rulebook)
+- <R-ID> <name>: <condition met, e.g. env 87 in 2026-07, 4 months before> — <evidence line> (+<points>)
+- none fired / rules not checked: <reason>
 
 CONFIDENCE AND LIMITS
-<single-vector? data gaps? contradictory texts? degraded sources?>
+<single-category? rules learned on short history? data gaps? contradictory texts? degraded sources?>
 
 RECOMMENDED PLAYBOOK: <PB-ID> — <name>
 1. <action from the pre-approved playbook, unchanged>
@@ -35,7 +39,8 @@ Feedback: Accurate | False Positive | Irrelevant
 3. Watchlist items (40–69) in one line each.
 4. Alerts sent this week and their feedback.
 5. Source health: degraded scrapers, credibility changes.
-6. Weight changes from recalibration, if any.
+6. Rules that fired this week, and rules that fired without a surge following (candidates for review).
+7. Weight and rulebook changes, if any.
 
 ## Daily summary
 

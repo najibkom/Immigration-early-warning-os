@@ -1,6 +1,6 @@
 ---
 name: source-registry
-description: Registers, rates and maintains the pipeline's sources in wiki/intel/sources.csv — Source IDs, vector, type, collection method, language, refresh rate, credibility score and status (ACTIVE, DEGRADED, RETIRED), including credibility cuts after repeated false positives. Use when the user says "add a source", "register this gazette", "which sources do we have for drought", "mark this scraper degraded", or when ingest or corridor-profile proposes new sources.
+description: Registers, rates and maintains the pipeline's sources in wiki/intel/sources.csv — Source IDs, category, type, collection method, language, refresh rate, credibility score and status (ACTIVE, DEGRADED, RETIRED), including credibility cuts after repeated false positives. Use when the user says "add a source", "register this gazette", "which sources do we have for drought", "mark this scraper degraded", or when ingest or corridor-profile proposes new sources.
 ---
 
 # Source registry
@@ -9,7 +9,7 @@ description: Registers, rates and maintains the pipeline's sources in wiki/intel
 
 ## Columns
 
-`source_id, name, vector, type, url, method, language, refresh, credibility, status, false_positives, notes`
+`source_id, name, category, type, url, method, language, refresh, credibility, status, false_positives, notes`
 
 - `source_id`: next free `SRC-NNN`. Never reuse or renumber.
 - `type`: government · un-agency · ngo · statistics · research · media · social-aggregate · satellite · market-data
@@ -23,7 +23,7 @@ Collect the fields (ask only for what you cannot find), check the source is not 
 
 ## Review
 
-On "review sources": list by vector with counts, flag vectors with fewer than two ACTIVE sources, DEGRADED sources, and sources not refreshed within twice their refresh period.
+On "review sources": list by category (econ, env, politics, social, media, other, plus outcome sources) with counts, flag categories with fewer than two ACTIVE sources, DEGRADED sources, and sources not refreshed within twice their refresh period.
 
 ## Credibility cuts (called by feedback)
 

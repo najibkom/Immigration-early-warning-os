@@ -16,7 +16,8 @@ For G2.1–G2.8 and G3.1–G3.2, give PASS or FAIL with a quote from the draft:
 - **G2.1 / G2.2 grounding**: list every number, date, place, decree and claim. Each must appear in a cited record. One unsupported item is a FAIL; name it.
 - **G2.3**: the drivers table matches the score JSON exactly.
 - **G2.4 noise**: compare any social spike to the dossier's "Known noise" and the calendar (holidays, matches, viral events). If unchecked, FAIL.
-- **G2.5**: single-vector alerts say so.
+- **G2.5**: single-category alerts say so.
+- **G2.9**: every rule named is approved in `frameworks/rulebook.json` and its evidence line is quoted; no rule invented or paraphrased into a stronger claim.
 - **G2.6 / G2.7**: contradictory texts or S_final ≥ 85 → status must be HELD.
 - **G2.8**: governance language and privacy: no PII, no precise locations tied to people, no stigmatising terms.
 - **G3.1 cooldown**, **G3.2 channel** per the routing matrix.

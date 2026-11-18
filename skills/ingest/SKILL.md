@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: Processes everything dropped in raw/ (reports, decrees, datasets, social aggregates, source notes) through Quality Gate 1 — correlation IDs, SHA-256 deduplication, schema validation, PII redaction, quarantine — and files each item into the Intelligence Brain with its taxonomy, corridor and vector. Use when the user says "ingest", "process the inbox", "I dropped files in raw", or shares a new report, decree or dataset to add.
+description: Processes current information dropped in raw/ (reports, decrees, datasets, social aggregates, source notes) through Quality Gate 1 — correlation IDs, SHA-256 deduplication, schema validation, PII redaction, quarantine — and files each item into the Intelligence Brain (signals, indicator rows, outcomes) with its taxonomy, corridor and category (past documents for learning go through history-load). Use when the user says "ingest", "process the inbox", "I dropped files in raw", or shares a new report, decree or dataset to add.
 ---
 
 # Ingest (Layer 1 → Gate 1 → Layer 2)
@@ -31,9 +31,9 @@ Run every check in Gate 1 (G1.1–G1.6):
 
 ## 3. Classify (Layer 2)
 
-For each passing item propose: corridor (from `wiki/intel/corridors/`, or "new corridor?"), vector (social/econ/weather/policy), taxonomy codes, the aggregate metric with its baseline if known, a one- or two-sentence neutral summary, confidence 0–1. Flag POL-CONF when two official texts contradict each other.
+For each passing item propose: corridor (from `wiki/intel/corridors/`, or "new corridor?"), category (econ, env, politics, social, media, other), taxonomy codes, the aggregate metric with its baseline if known, and the indicator row(s) it gives for `wiki/intel/indicators.csv` (period, indicator name as used in history, value, direction), a one- or two-sentence neutral summary, confidence 0–1. Flag POL-CONF when two official texts contradict each other.
 
-Show the proposals as one table: file · source · corridor · vector · codes · summary · Gate 1 result. Ask: "File these? 1 All · 2 Some (say which) · 3 Change first".
+Show the proposals as one table: file · source · corridor · category · codes · summary · Gate 1 result. Ask: "File these? 1 All · 2 Some (say which) · 3 Change first".
 
 ## 4. File
 
@@ -42,6 +42,8 @@ On confirmation:
 - Append one row per record to `wiki/intel/signals-index.csv`.
 - Write the record as JSON to `wiki/intel/signals/<YYYY-MM>/<correlation_id>.json` (create folders as needed), matching the schema.
 - Add a dated line under the corridor dossier's "History" or "Open questions" when the signal changes the picture.
+- Append the indicator rows to `wiki/intel/indicators.csv`.
+- Migration figures (arrivals, crossings, asylum applications) go to `wiki/intel/outcomes.csv`, not to signals: they are what the system learns to anticipate.
 - Leave originals in `raw/` untouched: they are the archive.
 
 ## 5. Report

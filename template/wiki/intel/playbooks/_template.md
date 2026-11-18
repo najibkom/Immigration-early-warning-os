@@ -9,7 +9,7 @@ approved_on: YYYY-MM-DD
 # PB-THEME-SCENARIO-00 — <short name>
 
 ## Scenario it matches
-Conditions, in vector terms (e.g. ENV-DRT above 70 + SOC-SRCH above 70 on a transit corridor).
+Conditions, in category terms (e.g. env above 70 four months before + media above 70 now, or an approved rule ID such as R-ENV-04 on a transit corridor).
 
 ## Minimum tier
 Elevated Risk | Critical Shock

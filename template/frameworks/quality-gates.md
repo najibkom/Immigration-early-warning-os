@@ -11,7 +11,9 @@ Three gates. A gate recommends; a human decides at Gate 2 holds. Nothing is broa
 | G1.3 | Record matches `frameworks/signal-schema.json` (required fields present, types right) | Quarantine to `raw/_quarantine/` with the reason |
 | G1.4 | Source is in `wiki/intel/sources.csv` and not `DEGRADED` | Register it first or quarantine |
 | G1.5 | PII scrubbed: no individual names, street addresses, phone numbers, IPs or user handles of private persons | Redact before saving |
-| G1.6 | Social signals stored as aggregates only (volumes, percentages, trends) | Rewrite as aggregate or reject |
+| G1.6 | Social media stored as aggregates only (volumes, percentages, trends) | Rewrite as aggregate or reject |
+| G1.7 | Historical indicators: one granularity (month or week), a period on every row, a direction (+1/−1) | Fix or quarantine |
+| G1.8 | Outcomes: never estimated; gaps left empty and noted | Remove estimated rows |
 
 ## Gate 2: Grounding and logic audit (alert-review skill, before scoring is published)
 
@@ -21,7 +23,8 @@ Three gates. A gate recommends; a human decides at Gate 2 holds. Nothing is broa
 | G2.2 | No number, date, place or decree appears that is not in a cited source | Yes |
 | G2.3 | Score was produced by `score.py`, and the JSON output is attached | Yes |
 | G2.4 | Noise filter: social spike checked against baseline viral dynamics (sport, pop culture, a hashtag reused for something else) | Yes |
-| G2.5 | Single-vector alerts say so and carry the 0.85 damping | |
+| G2.5 | Single-category alerts say so and carry the 0.85 damping | |
+| G2.9 | Every rule named in the alert is approved in the rulebook; its evidence line is quoted | Yes |
 | G2.6 | Contradictory official texts named and the item held | Yes |
 | G2.7 | S_final ≥ 85 → human hold, 30-minute review SLA, nothing goes out until approved | Yes |
 | G2.8 | Language is neutral and protection-oriented: describes conditions and needs, never stigmatises a group | Yes |

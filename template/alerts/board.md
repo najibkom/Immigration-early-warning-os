@@ -4,7 +4,7 @@ Updated by the `alerts-board` skill. One row per corridor.
 
 As of: YYYY-MM-DD HH:MM UTC
 
-| Corridor | S_final | Tier | Δ vs 30d | Top driver | Vectors >70 | Anomaly | Status | Last alert | Next step |
+| Corridor | Period | S_final | Tier | Δ vs 30d | Top driver | Categories >70 | Rules fired | Anomaly | Status | Last alert | Next step |
 |---|---|---|---|---|---|---|---|---|---|
 
 ## Holds pending human review (S_final ≥ 85 or contradictory texts)

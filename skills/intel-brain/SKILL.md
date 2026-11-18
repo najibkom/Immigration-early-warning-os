@@ -14,7 +14,8 @@ Ground every intelligence output in the workspace's own knowledge. Load only wha
 3. `wiki/intel/sources.csv`: the Source IDs you will cite, their credibility and status. Do not cite a source marked `DEGRADED` or `RETIRED` without saying so.
 4. `wiki/intel/taxonomy.md`: use only its codes.
 5. `wiki/intel/playbooks/`: only playbooks with `status: approved` may be recommended as actions. A `draft` playbook may be shown as "proposed, awaiting approval".
-6. Recent records: the latest rows in `wiki/intel/signals-index.csv` and `alerts/history.csv` for the corridor.
+6. `frameworks/rulebook.json` and the latest `drafts/rule-candidates-*.md`: which lead indicators matter on this corridor and which rules are approved.
+7. Recent records: the latest rows in `wiki/intel/signals-index.csv` and `alerts/history.csv` for the corridor.
 
 If a file is missing or still a template, say so in one line and continue with what exists. Never fill gaps with general knowledge presented as sourced intelligence.
 
@@ -23,7 +24,7 @@ If a file is missing or still a template, say so in one line and continue with w
 - Every factual sentence ends with Source IDs in brackets.
 - Numbers come from records or `score.py` output, never estimated in prose.
 - Aggregate, region-level, neutral language (see governance).
-- State limits: single-vector signals, data gaps, stale baselines, low-credibility sources.
+- State limits: single-category signals, rules learned on short history, data gaps, stale baselines, low-credibility sources.
 
 ## When the brain changes
 

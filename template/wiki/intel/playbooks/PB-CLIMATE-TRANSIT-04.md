@@ -11,7 +11,7 @@ approved_on: ""
 Example from the pipeline spec. Status is draft until the client approves it.
 
 ## Scenario it matches
-Severe agricultural drought (ENV-DRT > 70) plus elevated youth transit chatter (SOC-VOL or SOC-SRCH > 70) on a Sub-Saharan origin → North African coastal transit corridor.
+Severe agricultural drought (env > 70, ENV-DRT) plus elevated youth transit chatter (media > 70, MED-VOL or MED-SRCH) on a Sub-Saharan origin → North African coastal transit corridor.
 
 ## Minimum tier
 Elevated Risk

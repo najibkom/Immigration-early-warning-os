@@ -26,7 +26,7 @@ Check `python3 --version` works; `score.py` needs Python 3.8+ and the standard l
 Ask in one message, then write the answers into the "Project facts" section of `CLAUDE.md`:
 
 1. Client or funder, and who reads the alerts?
-2. Which corridors to monitor first (two or three)?
+2. Which corridors to monitor first (two or three), monthly or weekly periods, and the main outcome measure (arrivals, crossings, asylum applications)?
 3. Who is the analyst on duty for held alerts?
 4. Which alert channels exist today (Slack, Teams, email, webhook, SMS)?
 
@@ -36,7 +36,11 @@ Anything skipped stays `_to fill_`.
 
 Offer: "Run a first loop now? 1 Yes, on your first corridor · 2 Yes, on a made-up example · 3 Later".
 
-On yes, in order: `corridor-profile` for one corridor → `source-registry` for two or three sources → a test `score-signal` with indices the user gives (or example values: social 76, econ 72, weather 81, policy 40, marked EXAMPLE) → `alert-draft` on the result → `alert-review`. Mark every example file `EXAMPLE` in its title so it is never mistaken for live intelligence.
+On yes, in order: `corridor-profile` for one corridor → `source-registry` for two or three sources → a test `score-signal` with indices the user gives (or example values: econ 72, env 81, politics 40, social 30, media 76, marked EXAMPLE) → `alert-draft` on the result → `alert-review`. Mark every example file `EXAMPLE` in its title so it is never mistaken for live intelligence.
+
+## 3b. Learning path (offer)
+
+Ask whether past documents and migration figures exist (two years or more is the target). If yes, point to `raw/history/` and `raw/outcomes/` and offer `history-load` then `learn-rules` as the first real milestone.
 
 ## 4. Close
 

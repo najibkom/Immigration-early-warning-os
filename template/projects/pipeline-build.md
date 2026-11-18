@@ -25,7 +25,9 @@ As of YYYY-MM-DD: setup.
 - 
 
 ## Open tasks
-- [ ] Phase 1: list sources per vector in `wiki/intel/sources.csv`
+- [ ] Phase 1: list sources per category in `wiki/intel/sources.csv`
+- [ ] Phase 1: gather 2+ years of past documents (6 categories) and migration figures per corridor; run `history-load`
+- [ ] Phase 2: run `learn-rules`; approve the first rulebook with the client
 - [ ] Phase 1: profile the first corridors with `corridor-profile`
 - [ ] Phase 1: agree the playbook library with the client (`wiki/intel/playbooks/`)
 - [ ] Phase 2: confirm taxonomy codes in `wiki/intel/taxonomy.md`
